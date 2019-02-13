@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Cb ide ",
   "author": "abhishek97 <zapper.awake@gmail.com>",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -95,9 +95,5 @@
     "npm": "5",
     "yarn": "1"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }

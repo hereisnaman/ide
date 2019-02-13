@@ -40,7 +40,8 @@ export default new Vuex.Store({
     autoSaveIntervalId: null,
     checkData: '',
     codeId: null,
-    codeTitle: ''
+    codeTitle: '',
+    wakatimeLastPing: null
   },
   modules: {
     user: userModule
@@ -124,6 +125,9 @@ export default new Vuex.Store({
     },
     setCodeTitle(state, val) {
       state.codeTitle = val
+    },
+    setWakatimeLastPing(state, val) {
+      state.wakatimeLastPing = val
     }
   },
   plugins: [
@@ -249,6 +253,51 @@ export default new Vuex.Store({
           commit('updateOutput', base64.decode(output))
           return data;
         })
+    },
+    pingWakatime({state, commit}) {
+      const now = Date.now();
+
+      if(state.wakatimeLastPing === null || state.wakatimeLastPing + 1200 <= now) {
+        commit('setWakatimeLastPing', now);
+
+        let ext = '';
+        let language = '';
+        switch(state.language) {
+          case 'C++':
+            ext = 'cpp';
+            language = 'c++';
+            break
+          case 'C#':
+            ext = 'cs';
+            language = 'c#';
+            break
+          case 'Javascript':
+            ext = 'js';
+            language = 'javascript';
+            break
+          case 'Java':
+            ext = 'java';
+            language = 'java';
+            break
+          case 'Python':
+            ext = 'py';
+            language = 'python';
+            break
+          case 'NodeJs':
+            ext = 'js';
+            language = 'javascript';
+            break
+          case 'Ruby':
+            ext = 'rb';
+            language = 'ruby';
+            break;
+        }
+
+        httpPost(`/wakatime/ping`, {
+          file_path: window.location.toString(),
+          language,
+        });
+      }
     }
   }
 })

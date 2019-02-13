@@ -30,9 +30,28 @@
         'resetEditor',
       ]
 
+      let fileChangeMutations = [
+        'changeLangugae',
+        'updateCode',
+        'setCode',
+        'uploadCode',
+        'changeCustomInput',
+        'resetCode',
+        'setCodeId',
+      ]
+
       this.$store.subscribe((mutation, state) => {
         if (mutationsToSubscribe.includes(mutation.type) && !state.isChanged) {
           this.$store.commit('setIsChanged', true)
+        }
+
+        if (
+          state.user.isAuthenticated &&
+          state.user.currentUser &&
+          state.user.currentUser.wakatime_api_key &&
+          fileChangeMutations.includes(mutation.type)
+        ) {
+          this.$store.dispatch('pingWakatime');
         }
       })
     }
