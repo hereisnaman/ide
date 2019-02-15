@@ -260,35 +260,27 @@ export default new Vuex.Store({
       if(state.wakatimeLastPing === null || state.wakatimeLastPing + 1200 <= now) {
         commit('setWakatimeLastPing', now);
 
-        let ext = '';
-        let language = '';
+        let language;
         switch(state.language) {
           case 'C++':
-            ext = 'cpp';
             language = 'c++';
             break
           case 'C#':
-            ext = 'cs';
             language = 'c#';
             break
           case 'Javascript':
-            ext = 'js';
             language = 'javascript';
             break
           case 'Java':
-            ext = 'java';
             language = 'java';
             break
           case 'Python':
-            ext = 'py';
             language = 'python';
             break
           case 'NodeJs':
-            ext = 'js';
             language = 'javascript';
             break
           case 'Ruby':
-            ext = 'rb';
             language = 'ruby';
             break;
         }
