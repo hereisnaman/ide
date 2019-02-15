@@ -31,7 +31,7 @@
       ]
 
       let fileChangeMutations = [
-        'changeLangugae',
+        'changeLanguage',
         'updateCode',
         'setCode',
         'uploadCode',
