@@ -3,13 +3,13 @@
     <div class="btn-group" :class="{ userOptionOpen : isUserOptionOpen}"  @click="userOptionOpen">
       <button type="button" class="btn btn-sm btn-menu"
         aria-haspopup="true" aria-expanded="false" @blur="userOptionClose" >
-        user options <span class="fa fa-caret-down"></span>
+        {{userStore.currentUser.firstname}} <span class="fa fa-caret-down"></span>
       </button>
       <ul class="dropdown-menu">
         <li>
           <a class="btn btn-sm btn-menu" target="_blank" href="https://account.codingblocks.com/users/me">
             <i class="fa fa-user"></i>
-            {{userStore.currentUser.firstname}}
+            profile
           </a>
         </li>
         <li>
