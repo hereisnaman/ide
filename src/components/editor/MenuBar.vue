@@ -11,27 +11,43 @@
               <span v-if="loading">Running</span>
               <span v-else> Run </span>
             </button>
-            <language :options=languages :selected=selectedLang></language>
 
-            <button class="btn btn-sm btn-menu">
-            <router-link class="decoration-none" to="/" target="_blank" active-class="" exact-active-class="">
-              New <i class="fa fa-file-code-o" aria-hidden="true"></i>
-            </router-link>
-            </button>
+            <language :options=languages :selected=selectedLang></language>
 
             <button type="button" id="custInp" class="btn btn-sm btn-menu" @click="InOutBoxToggle()">
               Input <i class="fa fa-keyboard-o" aria-hidden="true"></i>
             </button>
-            <button type="button" id="save" class="btn btn-sm btn-menu" @click="saveToServer()">Save <i
-              class="fa fa-floppy-o" aria-hidden="true"></i></button>
-            <button type="button" id="download" class="btn btn-sm btn-menu" @click="showDownloadModal()">
-              Download
-              <i class="fa fa-download" aria-hidden="true"></i>
-            </button>
-            <input type="file" ref="fileUpload" style="display:none" @change="uploadCode">
-            <button type="button" id="uploadFile" class=" btn btn-sm btn-menu" @click="selectFile">
-              Upload <span class="fa fa-folder-open" aria-hidden="true"></span>
-            </button>
+
+            <div class="btn-group" :class="{ fileOptionOpen : isFileOptionOpen}"  @click="fileOptionOpen">
+              <button id="panelLang" type="button" class="btn btn-sm btn-menu"
+                      aria-haspopup="true" aria-expanded="false" @blur="fileOptionClose" >
+                file options<span class="fa fa-caret-down"></span>
+              </button>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <button class="btn btn-sm btn-menu">
+                  <router-link class="decoration-none" to="/" target="_blank" active-class="" exact-active-class="">
+                    New <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                  </router-link>
+                  </button>
+                </li>
+
+                <li>
+                  <button type="button" id="download" class="btn btn-sm btn-menu" @click="showDownloadModal()">
+                    Download <i class="fa fa-download" aria-hidden="true"></i>
+                  </button>
+                </li>
+                
+                <li>
+                  <input type="file" ref="fileUpload" style="display:none" @change="uploadCode">
+                  <button type="button" id="uploadFile" class=" btn btn-sm btn-menu" @click="selectFile">
+                    Upload <span class="fa fa-folder-open" aria-hidden="true"></span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
             <input type="file" id="upload" style="display:none;">
             <button type="button" id="settingButton" class="btn btn-sm btn-menu" @click="settingsToggle">
               Setting <span class="fa fa-cog"></span>
@@ -130,7 +146,8 @@
         fullscreen: false,
         loading: false,
         fileName: this.$store.state.fileName,
-        showBanner: true
+        showBanner: true,
+        isFileOptionOpen: false
       }
     },
     computed: {
@@ -266,6 +283,12 @@
       },
       changeTitle (e) {
         this.$store.commit('setCodeTitle', e.target.value)
+      },
+      fileOptionOpen() {
+        this.isFileOptionOpen = !this.isFileOptionOpen
+      },
+      fileOptionClose () {
+        setTimeout(() => { this.isFileOptionOpen=false },250 )
       }
     }
   }
@@ -306,6 +329,13 @@
     .logoMenu {
       display: none;
     }
+  }
+
+  .fileOptionOpen > .dropdown-menu {
+    display: list-item !important;
+    background-color: #202020;
+    font-size: 14px;
+    overflow: hidden;
   }
 </style>
 
