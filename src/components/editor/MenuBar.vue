@@ -21,7 +21,9 @@
             <div class="btn-group" :class="{ fileOptionOpen : isFileOptionOpen}"  @click="fileOptionOpen">
               <button id="panelLang" type="button" class="btn btn-sm btn-menu"
                       aria-haspopup="true" aria-expanded="false" @blur="fileOptionClose" >
-                file options<span class="fa fa-caret-down"></span>
+                file
+                <span class="fa fa-caret-down"></span>
+                <span class="fa fa-file"></span>
               </button>
 
               <ul class="dropdown-menu">
