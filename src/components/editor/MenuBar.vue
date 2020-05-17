@@ -23,7 +23,7 @@
                       aria-haspopup="true" aria-expanded="false" @blur="fileOptionClose" >
                 file
                 <span class="fa fa-caret-down"></span>
-                <span class="fa fa-file"></span>
+                <span class="fa fa-file-code-o"></span>
               </button>
 
               <ul class="dropdown-menu">
@@ -50,14 +50,29 @@
               </ul>
             </div>
 
+            <div class="btn-group" :class="{viewOptionOpen : isViewOptionOpen}"  @click="viewOptionOpen">
+              <button id="panelLang" type="button" class="btn btn-sm btn-menu"
+                      aria-haspopup="true" aria-expanded="false" @blur="viewOptionClose" >
+                view
+                <span class="fa fa-caret-down"></span>
+              </button>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <button type="button" id="settingButton" class="btn btn-sm btn-menu" @click="settingsToggle">
+                    Settings <span class="fa fa-cog"></span>
+                  </button>
+                </li>
+                  <button id="panelLang" type="button" class="btn btn-sm btn-menu" @click="showShortcutsModal()">
+                    Shortcuts <i class="fa fa-reply-all" aria-hidden="true"></i>
+                  </button>
+                <li>
+                </li>
+              </ul>
+            </div>
+
             <input type="file" id="upload" style="display:none;">
-            <button type="button" id="settingButton" class="btn btn-sm btn-menu" @click="settingsToggle">
-              Setting <span class="fa fa-cog"></span>
-            </button>
             <share></share>
-            <button id="panelLang" type="button" class="btn btn-sm btn-menu" @click="showShortcutsModal()">
-              Shortcuts <i class="fa fa-reply-all" aria-hidden="true"></i>
-            </button>
           </div>
           <div class="logoMenu">
             <login-button></login-button>
@@ -149,7 +164,8 @@
         loading: false,
         fileName: this.$store.state.fileName,
         showBanner: true,
-        isFileOptionOpen: false
+        isFileOptionOpen: false,
+        isViewOptionOpen: false
       }
     },
     computed: {
@@ -291,7 +307,13 @@
       },
       fileOptionClose () {
         setTimeout(() => { this.isFileOptionOpen=false },250 )
-      }
+      },
+      viewOptionOpen() {
+        this.isViewOptionOpen = !this.isViewOptionOpen
+      },
+      viewOptionClose () {
+        setTimeout(() => { this.isViewOptionOpen=false}, 250 )
+      },
     }
   }
 </script>
@@ -339,6 +361,13 @@
     font-size: 14px;
     overflow: hidden;
   }
+  
+  .viewOptionOpen > .dropdown-menu {
+    display: list-item !important;
+    background-color: #202020;
+    font-size: 14px;
+    overflow: hidden;
+  }
 </style>
 
 <style>
@@ -378,6 +407,19 @@
     border-radius: 3px !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
+  }
+
+  .key-span {
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    display: inline-block;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 0 #fff, 0 1px 0 #ccc;
+    font-size: 20px;
+    padding: 4px 8px;
+    margin: 0 8px;
     font-family: Helvetica, Arial, sans-serif;
   }
 
