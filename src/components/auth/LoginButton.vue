@@ -33,7 +33,7 @@
   <button id="panelLang" type="button" class="btn btn-sm btn-danger"
     @click="login"
     v-else >
-    Login <i class="fas fa-sign-in-alt"></i>
+    <i class="fa fa-sign-in"></i> Login
   </button>
   
 </template>
