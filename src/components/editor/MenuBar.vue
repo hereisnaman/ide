@@ -55,6 +55,7 @@
                       aria-haspopup="true" aria-expanded="false" @blur="viewOptionClose" >
                 view
                 <span class="fa fa-caret-down"></span>
+                <span class="fa fa-eye" aria-hidden="true"><span>
               </button>
 
               <ul class="dropdown-menu">
