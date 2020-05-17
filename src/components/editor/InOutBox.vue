@@ -3,6 +3,9 @@
     <div class="panel-input panel-default">
       <div class="panel-heading">
         <span>Input</span>
+        <label id="uploadInputFile" ><span class="fa fa-folder-open" style="margin-left: 5px" aria-hidden="true"></span>
+          <input type="file" ref="inputFileUpload" style="display:none" @change="uploadInput">
+        </label>
         <a v-on:click="onCopyInput" id="copy-input"> 
           <i class="fa fa-paperclip" />
         </a>
@@ -15,6 +18,9 @@
     <div class="panel-output panel-default">
       <div class="panel-heading">
         <span>Output</span>
+        <button type="button" id="downloadOutput" class="btn btn-sm btn-menu" @click="downloadOutput()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+        </button>
         <a v-on:click="onCopyOutput" id="copy-output"> 
           <i class="fa fa-paperclip"/>
         </a>
@@ -25,6 +31,7 @@
 </template>
 
 <script>
+  import * as download from 'downloadjs'
   export default {
     name: 'inoutbox',
     mounted() {
@@ -57,7 +64,7 @@
     },
     methods: {
       customInputChange(e) {
-        this.$store.commit('changeCustomInput', e.target.value)
+        this.$store.commit('changeCustomInput', e.target.value || e.target.result)
       },
       onCopyInput(e) {
         this.$copyText(this.$store.state.customInput).then((e) => {
@@ -86,7 +93,29 @@
           })
           console.error(e)
         })
-      }
+      },
+      uploadInput(e) {
+        const files = e.target.files || e.dataTransfer.files
+        if (!files.length) {
+          return
+        }
+        const file = files[0]
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          console.log('Uploaded File: ' + file.name)
+          this.$notify({
+            text: 'Input Uploaded Successfully',
+            type: 'success'
+          })
+          this.customInputChange(e)
+          this.$refs.inputFileUpload.value = ""
+        }
+        reader.readAsText(file)
+      },
+      downloadOutput() {
+        const output = this.$store.state.output;
+        download(`data:text/plain;charset=utf-8,${encodeURIComponent(output)}`, "output.txt", 'text/plain')
+      },
     }
   }
 </script>
@@ -161,7 +190,12 @@
     cursor: pointer;
   }
 
-  #copy-input, #copy-output {
+  #uploadInputFile{
+    margin: 0px 0px 0px auto;
+    padding: 0 10px;
+    cursor: pointer;
+  } 
+  #downloadOutput {
     margin-left: auto;
   }
 </style>
