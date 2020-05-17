@@ -34,6 +34,12 @@
                   </router-link>
                   </button>
                 </li>
+                
+                <li>
+                  <button type="button" id="save" class="btn btn-sm btn-menu" @click="saveToServer()">
+                    Save <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                  </button>
+                </li>
 
                 <li>
                   <button type="button" id="download" class="btn btn-sm btn-menu" @click="showDownloadModal()">
